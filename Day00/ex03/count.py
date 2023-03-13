@@ -10,7 +10,6 @@ def text_analyzer(*arg):
 """
     upper,lower,punct,spaces,text_len = 0,0,0,0, 0
     try:
-        
         if (len(arg) == 0):
             text_to_analyze = input("What is the text to analyze?")
         else:
