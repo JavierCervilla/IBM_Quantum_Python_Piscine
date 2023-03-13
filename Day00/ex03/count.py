@@ -41,7 +41,7 @@ def main():
             text_analyzer()
         return;
     except:
-        print("Error: Usage: python3 count.py <text>")
+        print("Error: Multiple Arguments, Usage: python3 count.py <text>")
         return
 if(__name__ == '__main__'):
     main()
