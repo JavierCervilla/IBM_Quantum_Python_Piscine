@@ -3,7 +3,7 @@
 kata = "The right format"
 
 def main():
-    print(str(kata).rjust(41, '-'))
+    print("{kata:->42}".format(kata=kata))
     return
     
 if(__name__ == '__main__'):

@@ -38,6 +38,7 @@ def print_prompt():
     print("Welcome to the Python Cookbook!\nList of available option:\n 1: Add a recipe\n 2: Delete a recipe\n 3: Print a recipe\n 4: Print the cookbook\n 5: Quit\n")
 
 def print_recipes():
+    print("This are the recipes in the cookbook:")
     for name in cookbook:
         print(name)
         
@@ -88,6 +89,7 @@ def main():
         if (stdin == "1"):
             add_recipe()
         elif (stdin == "2"):
+            print_recipes()
             name = input("\nEnter a name:\n")
             delete_recipe(name)
         elif (stdin == "3"):
@@ -97,7 +99,9 @@ def main():
             print_recipes()
         else:
             print("Error: Invalid option\n")
-        stdin = input("Please select an option:\n")
+        input("Press enter key to continue...")
+        print_prompt()
+        stdin = input("Please select an option:\n>>")
     print("\nCookbook closed. Goodbye!\n")
     return
     

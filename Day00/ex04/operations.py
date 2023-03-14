@@ -21,7 +21,7 @@ def main():
     prod = int(argv[1]) * int(argv[2])
     quot = (int(argv[2]) == 0) and errors["divider_by_zero"] or int(argv[1]) / int(argv[2])
     rem = (int(argv[2]) == 0) and errors["module_by_zero"] or int(argv[1]) % int(argv[2])
-    print("Sum: {sum}\nDifference: {diff}\nProduct: {prod}\nQuotient: {quot}\nRemainder: {rem}".format(sum=sum, diff=diff, prod=prod, quot=quot, rem=rem))    
+    print("Sum: {sum}\nDifference: {diff}\nProduct: {prod}\nQuotient: {quot:.2f}\nRemainder: {rem}".format(sum=sum, diff=diff, prod=prod, quot=quot, rem=rem))    
     return
     
 if(__name__ == '__main__'):

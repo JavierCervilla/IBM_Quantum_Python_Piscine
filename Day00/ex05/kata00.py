@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-kata = (19, 42, 21)
+kata = (12, 15, 18)
 
 def main():
-    print("The three numbers are: {x}, {y}, {z}".format(x = kata[0], y = kata[1], z = kata[2]))
+    print("The {length} numbers are: {numbers}".format(length = str(len(kata)), numbers = ", ".join(str(number) for number in kata)))
     return
     
 if(__name__ == '__main__'):
