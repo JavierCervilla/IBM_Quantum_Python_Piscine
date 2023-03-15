@@ -28,7 +28,7 @@ class Book:
         """
         if not type(recipe) is Recipe:
             return None
-        self.recipes_list[recipe.recipe_type()].append(recipe)
+        self.recipes_list[recipe.recipe_type].append(recipe)
         self.last_update = datetime.now()
         return recipe
     

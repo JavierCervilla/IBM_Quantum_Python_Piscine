@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:19:59 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 03:44:36 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 04:03:23 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ class Recipe:
         }
         self.__checker__(checker_functions)
 
-        self.dict = {
+        self.__dict__ = {
             "_id": int(kwargs["_id"]),
             "name": checker_functions["name"](),
             "description": len(str(checker_functions["description"]())) <= 500 and checker_functions["description"]() ,
@@ -42,49 +42,22 @@ class Recipe:
             "ingredients": checker_functions["ingredients"](),
             "recipe_type": checker_functions["recipe_type"](),
         }
-    
-    # GETTERS
-    def _id(self) -> int:
-        return int(self.dict.get("_id"))
-        
-    def name(self) -> str:
-        return str(self.dict.get("name"))
-    
-    def description(self) -> str or None:
-        if ("description" not in self.dict):
-            return None
-        return str(self.dict.get("description"))
-
-    def cooking_lvl(self) -> int:
-        return int(self.dict.get("cooking_lvl"))
-
-    def cooking_time(self) -> int:
-        return int(self.dict.get("cooking_time"))
-
-    def ingredients(self) -> list:
-        return list(self.dict.get("ingredients"))
-    
-    def recipe_type(self) -> str:
-        return str(self.dict.get("recipe_type"))
-
 
     # OTHER METHODS
     def __str__(self) -> str:
         """Return the string to print with the recipe info"""
-        if (self.dict == None):
-            return str(self.dict)
         return "[{orange}{_id}{reset}] Name: {green}{name}{reset}\nDescription: {green}{description}{reset}\n - lvl: {green}{cooking_lvl}{reset}\n - time: {green}{cooking_time}{reset}\n - type: {green}{recipe_type}{reset}\n - ingredientes: {green}{ingredients}{reset}\n".format(
             red=colors["red"],
             orange=colors["orange"],
             green=colors["green"],
             reset=colors["reset"],
-            _id=self._id(),
-            name=self.name(),
-            description=self.description() or "",
-            cooking_lvl=self.cooking_lvl(),
-            cooking_time=self.cooking_time(),
-            recipe_type=self.recipe_type(),
-            ingredients=self.ingredients(),
+            _id=self._id,
+            name=self.name,
+            description=self.description or "",
+            cooking_lvl=self.cooking_lvl,
+            cooking_time=self.cooking_time,
+            recipe_type=self.recipe_type,
+            ingredients=self.ingredients,
         )
 
     def print(self):

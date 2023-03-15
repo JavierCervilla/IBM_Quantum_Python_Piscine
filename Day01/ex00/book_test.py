@@ -42,6 +42,26 @@ valid_comida_recipe = lambda: Recipe(
                 recipe_type="comida",
             )
 
+def create_a_book_and_add_valid_recipe():
+    book = Book(name="My Book")
+    book.add_recipe(
+        recipe=valid_entrante_recipe()
+    )
+    book.add_recipe(
+        recipe=valid_postre_recipe()
+    )
+    book.add_recipe(
+        recipe=valid_comida_recipe()
+    )
+    return book
+
+def create_a_book_and_add_invalid_recipe(recipe):
+    book = Book(name="My Book")
+    book.add_recipe(
+        recipe=recipe
+    )
+    return book
+
 def book_tests():
     
     # FULL VALID NO RECIPES CLASS:
@@ -66,28 +86,6 @@ def book_tests():
         error=colors["red"] + "❌ ERROR: THIS SHOULD NOT BE VISIBLE. IF YOU VIEW ME YOUR CODE IS BROKEN." + colors["reset"],
         success=colors["green"] + "✅ TEST PASSED: The BOOK is VALID and FULL ." + colors["reset"]
     )
-    
-    def create_a_book_and_add_valid_recipe():
-        book = Book(name="My Book")
-        book.add_recipe(
-            recipe=valid_entrante_recipe()
-        )
-        book.add_recipe(
-            recipe=valid_postre_recipe()
-        )
-        book.add_recipe(
-            recipe=valid_comida_recipe()
-        )
-        return book
-    
-    def create_a_book_and_add_invalid_recipe(recipe):
-        book = Book(name="My Book")
-        book.add_recipe(
-            recipe=recipe
-        )
-        return book
-    
-    
     # VALID BOOK WITH VALID RECIPE:
     test(
         name="It SHOULD create a FULLY FUNCTIONAL BOOK W/O RECIPES, ADD a RECIPE for each type and print it.",
