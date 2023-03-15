@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:19:59 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 04:03:23 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 13:20:12 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ class Recipe:
             "recipe_type" : lambda: str(kwargs["recipe_type"]) and str(kwargs["recipe_type"]).lower() in RECIPE_TYPES and str(kwargs["recipe_type"]) or None,
         }
         self.__checker__(checker_functions)
-
         self.__dict__ = {
             "_id": int(kwargs["_id"]),
             "name": checker_functions["name"](),
