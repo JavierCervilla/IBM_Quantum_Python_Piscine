@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 03:50:29 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 03:58:09 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 04:21:25 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,17 @@ class Stark(GotCharacter):
         super().__init__(first_name=first_name, is_alive=is_alive)
         self.family_name = "Stark"
         self.house_words = "Winter is coming"
+
+    def __str__(self):
+        return "I am {first_name}, from {family_name} and i am {alive}: {house_words}!".format(
+            first_name=self.first_name,
+            family_name=self.family_name,
+            house_words=self.house_words,
+            alive= "alive" if self.is_alive else "dead"
+        )
+
     def print_house_words(self):
         print(self.house_words)
+
     def die(self):
         self.is_alive = False
