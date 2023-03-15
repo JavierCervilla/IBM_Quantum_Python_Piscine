@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 16:25:52 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 16:28:58 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,9 @@ class Vector:
             raise ValueError("Invalid vector: empty")
         else:
             cols = len(values)
-           
+
         for i in range(cols):
             rows = len(values[i])
-        
         self.shape = (cols, rows)
         self.values = list()
 
