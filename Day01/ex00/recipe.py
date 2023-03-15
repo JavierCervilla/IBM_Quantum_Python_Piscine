@@ -6,9 +6,12 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:19:59 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 00:39:23 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 02:22:29 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+from utils import colors
+
 
 RECIPE_TYPES = ["entrante", "comida", "postre"]
 
@@ -39,19 +42,46 @@ class Recipe:
             "ingredients": ingredients(),
             "recipe_type": recipe_type()
         }
+    
+    def _id(self):
+        return int(self.dict.get("_id"))
+        
+    def name(self):
+        return str(self.dict.get("name"))
+    
+    def description(self):
+        if ("description" not in self.dict):
+            return None
+        return str(self.dict.get("description"))
+
+    def cooking_lvl(self):
+        return int(self.dict.get("cooking_lvl"))
+
+    def cooking_time(self):
+        return int(self.dict.get("cooking_time"))
+
+    def ingredients(self):
+        return list(self.dict.get("ingredients"))
+    
+    def recipe_type(self):
+        return str(self.dict.get("recipe_type"))
 
     def __str__(self) -> str:
         """Return the string to print with the recipe info"""
         if (self.dict == None):
             return str(self.dict)
-        return "[{_id}] {name:<100}\n{description} - lvl: {cooking_lvl:^3}\n - time: {cooking_time:^6}\n - type: {recipe_type}\n - ingredientes:\n   {ingredients}\n".format(
-            _id=self.dict.get("_id"),
-            name=self.dict.get("name"),
-            description=str(self.dict.get("description")) + "\n" or "",
-            cooking_lvl=self.dict.get("cooking_lvl"),
-            cooking_time=self.dict.get("cooking_time"),
-            recipe_type=self.dict.get("recipe_type"),
-            ingredients=self.dict.get("ingredients"),
+        return "[{orange}{_id}{reset}] Name: {green}{name}{reset}\nDescription: {green}{description}{reset}\n - lvl: {green}{cooking_lvl}{reset}\n - time: {green}{cooking_time}{reset}\n - type: {green}{recipe_type}{reset}\n - ingredientes: {green}{ingredients}{reset}\n".format(
+            red=colors["red"],
+            orange=colors["orange"],
+            green=colors["green"],
+            reset=colors["reset"],
+            _id=self._id(),
+            name=self.name(),
+            description=self.description() or "",
+            cooking_lvl=self.cooking_lvl(),
+            cooking_time=self.cooking_time(),
+            recipe_type=self.recipe_type(),
+            ingredients=self.ingredients(),
         )
 
     def print(self):

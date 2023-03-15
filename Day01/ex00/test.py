@@ -1,18 +1,33 @@
 #!/usr/bin/env python3
-
-from recipe import Recipe
+from recipe_test import recipe_tests
+from book_test import book_tests
+from utils import colors
 
 def main():
-    recipe = Recipe(
-        _id=1,
-        name="Bocata de Calamares",
-        description="Rico Bocata para disfrutar paseando por el centro de Madrid.",
-        cooking_lvl=6,
-        cooking_time=15,
-        recipe_type="entrante",
-        ingredients=["Pan", "Calamares", "Mahonesa"],
-    )
-    recipe.print()
+    """ # RECIPES TESTS:
+    print("{color}{text:🀫^110}{reset}".format(
+        text="| START OF UNITARY TESTS OF CLASS RECIPE IN recipe.py |",
+        color=colors["purple"],
+        reset=colors["reset"]
+    ))
+    recipe_tests()
+    print("{color}{text:🀫^110}{reset}".format(
+        text="| END OF UNITARY TESTS OF CLASS RECIPE IN recipe.py |",
+        color=colors["purple"],
+        reset=colors["reset"]
+    )) """
+    # BOOK TESTS:
+    print("{color}{text:🀫^110}{reset}".format(
+        text="| START OF UNITARY TESTS OF CLASS BOOK IN book.py |",
+        color=colors["purple"],
+        reset=colors["reset"]
+    ))
+    book_tests()
+    print("{color}{text:🀫^110}{reset}".format(
+        text="| ENF OF UNITARY TESTS OF CLASS BOOK IN book.py |",
+        color=colors["purple"],
+        reset=colors["reset"]
+    ))
     return
     
 if(__name__ == '__main__'):
