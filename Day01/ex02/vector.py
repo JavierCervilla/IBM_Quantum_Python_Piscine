@@ -6,12 +6,12 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 17:57:58 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 19:30:02 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from math import sqrt, cos
-from utils import test, colors
+from utils import colors
 
 # COLUMNA: ([[1., 2., 3.]])
 # FILA: ([[1.], [2.], [3.]])
@@ -23,8 +23,9 @@ class Vector:
             raise ValueError("Invalid vector: empty")
         else:
             cols = len(values)
+        rows = 0
         for i in range(cols):
-            rows = len(values[i])
+            rows = len(values[i]) if type(values[i]) == list else rows + 1
         self.shape = (cols, rows)
         self.values = list()
 
@@ -38,11 +39,12 @@ class Vector:
         (cols, rows) = self.shape
         new_vector = list()
         if (cols == 1):
-            for row in range(rows):
-                for col in range(cols):
-                    new_col = list()
-                    new_col.append(func(self.values[col][row]))
-                new_vector.append(new_col)
+            for col in range(cols):
+                new_row = list()
+                for row in range(rows):
+                    new_col = func(self.values[col][row])
+                    new_row.append(new_col)
+                new_vector.append(new_row)
         else:
             for col in range(cols):
                 for row in range(rows):
@@ -57,7 +59,6 @@ class Vector:
 
     def sum(self):
         (cols, rows) = self.shape
-        new_vector = list()
         sum = 0.
         if (cols == 1):
             for row in range(rows):
@@ -66,7 +67,7 @@ class Vector:
         else:
             for col in range(cols):
                 for row in range(rows):
-                    sum += self.values[col][row]
+                    sum+= self.values[col][row]
         return sum
 
     #def __sub__(self, p2):
@@ -80,12 +81,13 @@ class Vector:
     def __rmul__(self, n: float):
         return self.__mul__(n)
 
-    def abs(self):
-        suma = 0
+    def abs(self) -> float:
         def squares(a):
             return (a ** 2)
         sq = self.map(lambda a: squares(a))
+        print(str(sq))
         return sq.sum()
+        return self.sum()
 
 
     def __truediv__(self, n: float):
@@ -94,124 +96,38 @@ class Vector:
                 raise ValueError("ZeroDivisionError: division by zero.")
             div = lambda a: a * n
             return self.map(div)
-        except Exception as err:
-            print("Error: {}".format(err))
+        except Exception as error:
+            self.__error__(error=error)
+
+    def __error__(self, error):
+        print("{red}Error: {error}{reset}".format(
+            error=error,
+            red=colors["red"],
+            reset=colors["reset"]
+        ))
 
     def __rtruediv__(self, n: float):
-        return self.__truediv__(n)
+        try:
+            raise Exception("NotImplementedError: Division of a scalar by a Vector is not defined here.")
+        except Exception as error:
+            self.__error__(error=error)
             
     
     
     def __str__(self):
         return "Vector({values})".format(values=self.values)
-        
-if __name__ == "__main__":
-    
-    def valid_vector_with_all_valid_op():
-        n = 2.
-        v = Vector([[1., 2., 3.]])
-        print("[{orange}{vector}{blue} + {orange}{num}{reset} = {green}{result}{reset}]".format(
-                vector=str(v),
-                num=n,
-                result=str(v + n),
-                orange=colors["orange"],
-                reset=colors["reset"],
-                green=colors["green"],
-                blue=colors["blue"],
-            )
-        )
-        print("[{orange}{vector}{blue} * {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(v * n),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}{num}{blue} * {orange}{vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(n * v),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}{vector}{blue} / {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(v / n),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        """
-        # ESTA FUNCION DA ERROR YA QUE NO SE PUEDE DIVIDIR UN NUMERO ENTRE UN VECTOR
-        print("[{orange}{num}{blue} / {orange}{vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(n / v),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        """
-        print("[{orange}{vector}{blue} / {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=0,
-            result=str(v / 0),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}modulo de {vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=0,
-            result=v.abs(),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        return v
-    
-    test (
-        name="{blue}This is a valid vector with all valid operations.\n{reset}".format(
-            blue=colors["blue"], reset=colors["reset"]
-        ),
-        test=lambda: valid_vector_with_all_valid_op(),
-        error="{red}❌ Error: THIS SHOULD NOT BE VISIBLE. IF YOU SHOW ME, YOUR CODE IS BROKEN\n{reset}".format(
-            red=colors["red"], reset=colors["reset"]
-        ),
-        success="{green}✅ TEST PASSED: {orange}This is a valid vector with all valid operations.\n{reset}".format(
-            green=colors["green"], reset=colors["reset"], orange=colors["orange"]
-        )
-    )
 
-    """ v2 = Vector([[1.], [2.], [3.]])
-    print("{} * {} = {}".format(str(v2), n, str(v2 * n)))
-    print("{} * {} = {}".format(n, str(v2), str(n * v2)))
-    print("{} / {} = {}".format(str(v2), n, str(v2 / n)))
-    #print("{} / {} = {}".format(n, str(v2, str(n / v2))))
-    print("{} / {} = {}".format(str(v2), 0, str(v2 / 0)))
+v1 = Vector([[1., 2., 3.]])
+n = 2
+print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+print(v1.abs())
+v1 = Vector([[1.], [2.],[3.]])
 
-    print(v2.abs())
-
-    v3 = Vector([[5.0, 1.0, 2.0, 3.0]])
-
-    print("{} * {} = {}".format(str(v3), n, str(v3 * n)))
-    print("{} * {} = {}".format(n, str(v3), str(n * v3)))
-    print("{} / {} = {}".format(str(v3), n, str(v3 / n)))
-    #print("{} / {} = {}".format(n, str(v3, str(n / v3))))
-    print("{} / {} = {}".format(str(v3), 0, str(v3 / 0)))
-
-    print(v3.abs()) """
-
-    """ v2 = Vector([[1.], [2.], [3.]])
-    print(str(v2))
-    m1 = Vector([[1., 2., 3.], [4., 5., 6.], [7., 8., 9.]])
-    print(str(m1)) """
+print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+print(v1.abs())

@@ -14,7 +14,7 @@ colors = {
 def test(name:str, test, error: str, success:str):
     print("\n\n{blue}Testing: {yellow}{name}{reset}".format(name=name, yellow=colors["yellow"], reset=colors["reset"], blue=colors["blue"]))
     try:
-        print("{blue}Instancing class....{reset}".format(blue=colors["cyan"], reset=colors["reset"]))
+        print("{blue}Instancing class and perfoming operations....{reset}".format(blue=colors["cyan"], reset=colors["reset"]))
         instance = test()
         print("{blue}Class Type: {green}{type}{reset}".format(
             type=type(instance),
