@@ -5,6 +5,8 @@ from recipe import Recipe
 
 
 
+invalid_not_recipe = lambda: None
+
 invalid_recipe = lambda: Recipe(
                 _id=1,
                 name="Bocata de Calamares",
@@ -78,10 +80,10 @@ def book_tests():
         )
         return book
     
-    def create_a_book_and_add_invalid_recipe():
+    def create_a_book_and_add_invalid_recipe(recipe):
         book = Book(name="My Book")
         book.add_recipe(
-            recipe=invalid_recipe()
+            recipe=recipe
         )
         return book
     
@@ -94,12 +96,19 @@ def book_tests():
         success=colors["green"] + "✅ TEST PASSED: The BOOK is VALID and FULL of RECIPES." + colors["reset"]
     )
     
-    # VALID BOOK WITH INVALID RECIPE:
+    # VALID BOOK WITH INVALID RECIPE of type RECIPE:
     test(
-        name="It SHOULD create a FULLY FUNCTIONAL BOOK W/O RECIPES, ADD a RECIPE for each type and print it.",
-        test=lambda: create_a_book_and_add_invalid_recipe(),
+        name="It SHOULD create a FULLY FUNCTIONAL BOOK W/O RECIPES, NOT ADD any RECIPE.",
+        test=lambda: create_a_book_and_add_invalid_recipe(invalid_recipe()),
         success=colors["red"] + "❌ ERROR: THIS SHOULD NOT BE VISIBLE. IF YOU VIEW ME YOUR CODE IS BROKEN." + colors["reset"],
         error=colors["green"] + "✅ TEST PASSED: The BOOK is VALID and RECIPES NOT ADDED." + colors["reset"]
+    )
+    # VALID BOOK WITH INVALID RECIPE of type NOT RECIPE:
+    test(
+        name="It SHOULD create a FULLY FUNCTIONAL BOOK W/O RECIPES, NOT ADD any RECIPE.",
+        test=lambda: create_a_book_and_add_invalid_recipe(None),
+        error=colors["red"] + "❌ ERROR: THIS SHOULD NOT BE VISIBLE. IF YOU VIEW ME YOUR CODE IS BROKEN." + colors["reset"],
+        success=colors["green"] + "✅ TEST PASSED: The BOOK is VALID and RECIPES NOT ADDED." + colors["reset"]
     )
     
     return

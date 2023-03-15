@@ -4,7 +4,7 @@ from book_test import book_tests
 from utils import colors
 
 def main():
-    """ # RECIPES TESTS:
+    # RECIPES TESTS:
     print("{color}{text:🀫^110}{reset}".format(
         text="| START OF UNITARY TESTS OF CLASS RECIPE IN recipe.py |",
         color=colors["purple"],
@@ -15,7 +15,7 @@ def main():
         text="| END OF UNITARY TESTS OF CLASS RECIPE IN recipe.py |",
         color=colors["purple"],
         reset=colors["reset"]
-    )) """
+    ))
     # BOOK TESTS:
     print("{color}{text:🀫^110}{reset}".format(
         text="| START OF UNITARY TESTS OF CLASS BOOK IN book.py |",

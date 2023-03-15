@@ -26,9 +26,11 @@ class Book:
         Returns:
             Recipe: _description_
         """
+        if not type(recipe) is Recipe:
+            return None
         self.recipes_list[recipe.recipe_type()].append(recipe)
         self.last_update = datetime.now()
-        pass
+        return recipe
     
     def get_recipe_by_name(self, name: str) -> Recipe:
         """get a recipe by name
