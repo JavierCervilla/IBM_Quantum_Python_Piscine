@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 20:16:28 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 20:23:29 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,19 +119,20 @@ class Vector:
             cols=self.shape[1]
         )
 
-v1 = Vector([[1., 2., 3.]])
-print("Vector([[1., 2., 3.]])", str(v1))
-n = 2
-print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
-print("{} * {} = {}".format(n, str(v1), str(n * v1)))
-print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
-print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
-print(v1.abs())
-v1 = Vector([[1.], [2.],[3.]])
-print("Vector([[1.], [2.],[3.]])", str(v1))
-
-print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
-print("{} * {} = {}".format(n, str(v1), str(n * v1)))
-print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
-print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
-print(v1.abs())
+## v1 = Vector([[1., 2., 3.]])
+## print("Vector([[1., 2., 3.]])", str(v1))
+## n = 2
+## print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+## print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+## print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+## print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+## print(v1.abs())
+## 
+## v1 = Vector([[1.], [2.],[3.]])
+## print("Vector([[1.], [2.],[3.]])", str(v1))
+## 
+## print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+## print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+## print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+## print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+## print(v1.abs())

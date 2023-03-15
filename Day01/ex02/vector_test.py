@@ -73,75 +73,6 @@ def test_vector_class():
         ))
         return v
     
-    def valid_vector_tested_with_invalid_op__rtruediv__(v: Vector):
-        n = 2.
-        print("[{orange}{vector}{blue} + {orange}{num}{reset} = {green}{result}{reset}]".format(
-                vector=str(v),
-                num=n,
-                result=str(v + n),
-                orange=colors["orange"],
-                reset=colors["reset"],
-                green=colors["green"],
-                blue=colors["blue"],
-            )
-        )
-        print("[{orange}{vector}{blue} * {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(v * n),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}{num}{blue} * {orange}{vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(n * v),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}{vector}{blue} / {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(v / n),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        # ESTA FUNCION DA ERROR YA QUE NO SE PUEDE DIVIDIR UN NUMERO ENTRE UN VECTOR
-        print("[{orange}{num}{blue} / {orange}{vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=n,
-            result=str(n / v),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}{vector}{blue} / {orange}{num}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=0,
-            result=str(v / 0),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        print("[{orange}modulo de {vector}{reset} = {green}{result}{reset}]".format(
-            vector=str(v),
-            num=0,
-            result=v.abs(),
-            orange=colors["orange"],
-            reset=colors["reset"],
-            green=colors["green"],
-            blue=colors["blue"],
-        ))
-        return v
-    
     print("{color}{text:🀫^110}{reset}".format(
         text="| START OF UNITARY TESTS OF CLASS VECTOR IN vector.py |",
         color=colors["purple"],
@@ -163,7 +94,7 @@ def test_vector_class():
         name="{blue}This is a valid COLUMN VECTOR with ALL VALID AND INVALID OPs.\n{reset}".format(
             blue=colors["blue"], reset=colors["reset"]
         ),
-        test=lambda: valid_vector_tested_with_all_valid_op(v=[[1.], [2.], [3.]]),
+        test=lambda: valid_vector_tested_with_all_valid_op(v=Vector([[1.], [2.], [3.]])),
         error="{red}❌ Error: THIS SHOULD NOT BE VISIBLE. IF YOU SHOW ME, YOUR CODE IS BROKEN\n{reset}".format(
             red=colors["red"], reset=colors["reset"]
         ),
