@@ -20,7 +20,7 @@ def ft_proggress(list):
     step = 0
     for elem in list:
         step += 1
-        yield step
+        yield elem
         last_timestamp = datetime.now()
         percent = (step / len(list)) * 100
         eta = ((last_timestamp - initial_timestamp).total_seconds() / step) * (len(list) - step)
