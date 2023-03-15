@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 16:28:58 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 17:29:25 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,12 @@ from math import sqrt, cos
 # FILA: ([[1.], [2.], [3.]])
 
 class Vector:
+    """This Class Represent a Vector"""
     def __init__(self, values):
         if (len(values) == 0):
             raise ValueError("Invalid vector: empty")
         else:
             cols = len(values)
-
         for i in range(cols):
             rows = len(values[i])
         self.shape = (cols, rows)
@@ -37,7 +37,6 @@ class Vector:
     def map(self, func):
         (cols, rows) = self.shape
         new_vector = list()
-        
         if (cols == 1):
             for row in range(rows):
                 for col in range(cols):
@@ -52,32 +51,42 @@ class Vector:
                 new_vector.append(new_col)
         return Vector(new_vector)
     
-    
-    
     def __add__(self, n:float):
         sum = lambda a: n + a
         return self.map(sum)
+
+    def sum(self):
+        (cols, rows) = self.shape
+        new_vector = list()
+        sum = 0.
+        if (cols == 1):
+            for row in range(rows):
+                for col in range(cols):
+                    sum += self.values[col][row]
+        else:
+            for col in range(cols):
+                for row in range(rows):
+                    sum += self.values[col][row]
+        return sum
 
     #def __sub__(self, p2):
     #    pass
 
     def __mul__(self, n: float):
         """"Performs a scalar multiplication of a vector by a number n"""
-        mul = lambda a: n + a 
+        mul = lambda a: n * a 
         return self.map(mul)
-    
+
     def __rmul__(self, n: float):
         return self.__mul__(n)
-        
-    def abs(self):
-        (cols, rows) = self.shape
-        sum_squares = 0
-        for col in range(cols):
-            for row in range(rows):
-                sum_squares += self.values[col][row] ** 2
-        return sqrt(sum_squares)
 
-    
+    def abs(self):
+        suma = 0
+        def squares(a):
+            return (a ** 2)
+        sq = self.map(lambda a: squares(a))
+        return sq.sum()
+
 
     def __truediv__(self, n: float):
         try:
@@ -87,7 +96,7 @@ class Vector:
             return self.map(div)
         except Exception as err:
             print("Error: {}".format(err))
-            
+
     def __rtruediv__(self, n: float):
         return self.__truediv__(n)
             
@@ -105,6 +114,7 @@ print("{} * {} = {}".format(n, str(v1), str(n * v1)))
 print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
 #print("{} / {} = {}".format(n, str(v1, str(n / v1))))
 print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+
 print(v1.abs())
 
 v2 = Vector([[1.], [2.], [3.]])
@@ -113,6 +123,7 @@ print("{} * {} = {}".format(n, str(v2), str(n * v2)))
 print("{} / {} = {}".format(str(v2), n, str(v2 / n)))
 #print("{} / {} = {}".format(n, str(v2, str(n / v2))))
 print("{} / {} = {}".format(str(v2), 0, str(v2 / 0)))
+
 print(v2.abs())
 
 
