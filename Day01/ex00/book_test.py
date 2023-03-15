@@ -17,14 +17,14 @@ invalid_recipe = lambda: Recipe(
             )
 valid_entrante_recipe = lambda: Recipe(
                 _id=1,
-                name="Bocata de Calamares",
+                name="Tiras de Calamares",
                 cooking_lvl=3,
                 cooking_time=15,
                 ingredients=["Pan", "Calamares", "Mahonesa"],
                 recipe_type="entrante",
             )
 valid_postre_recipe = lambda: Recipe(
-                _id=1,
+                _id=2,
                 name="Arroz con Leche",
                 cooking_lvl=3,
                 cooking_time=15,
@@ -33,8 +33,8 @@ valid_postre_recipe = lambda: Recipe(
                 recipe_type="postre",
             )
 valid_comida_recipe = lambda: Recipe(
-                _id=1,
-                name="Tarta de Calamares",
+                _id=2,
+                name="Bocata de Calamares",
                 cooking_lvl=3,
                 cooking_time=15,
                 ingredients=["Pan", "Calamares", "Mahonesa"],
@@ -44,7 +44,7 @@ valid_comida_recipe = lambda: Recipe(
 
 def book_tests():
     
-    """ # FULL VALID NO RECIPES CLASS:
+    # FULL VALID NO RECIPES CLASS:
     test(
         name="It SHOULD create a FULLY FUNCTIONAL CLASS W/O RECIPES and print it.",
         test=lambda: Book(name="My Book"),
@@ -65,7 +65,7 @@ def book_tests():
         test=lambda: Book(name="My Book"),
         error=colors["red"] + "❌ ERROR: THIS SHOULD NOT BE VISIBLE. IF YOU VIEW ME YOUR CODE IS BROKEN." + colors["reset"],
         success=colors["green"] + "✅ TEST PASSED: The BOOK is VALID and FULL ." + colors["reset"]
-    ) """
+    )
     
     def create_a_book_and_add_valid_recipe():
         book = Book(name="My Book")
