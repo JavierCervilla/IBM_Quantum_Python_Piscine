@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:19:59 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 03:28:02 by javier           ###   ########.fr        #
+#    Updated: 2023/03/15 03:44:36 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,11 @@ RECIPE_TYPES = ["entrante", "comida", "postre"]
 
 class Recipe:
     """Class to represent a recipe"""
-    
     def __checker__(self, functions):
         for key in functions:
             if functions[key]() == None:
                 raise ValueError("Invalid value for {}".format(functions[key]()))
-                
-    
+
     def __init__(self, **kwargs):
         checker_functions = {
             "name" : lambda: "name" in kwargs and 100 > len(str(kwargs["name"])) > 0 and str(kwargs["name"]) or None,

@@ -4,7 +4,7 @@ colors = {
     "yellow": "\033[33m",
     "orange": "\033[34m",
     "purple": "\033[0;95m",
-    "blue": "\033[30m",
+    "blue": "\033[36m",
     "magenta": "\033[35m",
     "cyan": "\033[36m",
     "white": "\033[37m",
@@ -12,18 +12,19 @@ colors = {
 }
 
 def test(name:str, test, error: str, success:str):
-    print("\n\nTesting: " + colors["yellow"] + name + colors["reset"])
+    print("\n\n{blue}Testing: {yellow}{name}{reset}".format(name=name, yellow=colors["yellow"], reset=colors["reset"], blue=colors["blue"]))
     try:
-        print("Instancing class...")
+        print("{blue}Instancing class....{reset}".format(blue=colors["cyan"], reset=colors["reset"]))
         instance = test()
-        print("Type: {color}{type}{reset}".format(
+        print("{blue}Class Type: {green}{type}{reset}".format(
             type=type(instance),
-            color=colors["green"],
+            blue=colors["cyan"],
+            green=colors["green"],
             reset=colors["reset"]
         ))
-        print("Printing Instance:\n\n{instance}\n".format(instance=str(instance)))
+        print("{blue}Printing Instance:{reset}\n\n{instance}\n".format(instance=str(instance), blue=colors["cyan"], reset=colors["reset"]))
         print(colors["reset"])
-        print(colors["green"] + "RESULT: " + success + colors["reset"])
+        print(colors["cyan"] + "RESULT: " + success + colors["reset"])
     except Exception as err:
-        print(colors["red"] + "Original Error: " + colors["orange"] + str(err) + colors["reset"])
-        print(colors["red"] + "Entering Except: " + "RESULT: " + error + colors["reset"])
+        print(colors["cyan"] + "Original Error: " + colors["orange"] + str(err) + colors["reset"])
+        print(colors["cyan"] + "Entering Except: " + "RESULT: " + error + colors["reset"])
