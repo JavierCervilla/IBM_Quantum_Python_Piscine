@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/16 19:01:10 by javier           ###   ########.fr        #
+#    Updated: 2023/03/16 20:43:21 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ class Vector:
     """This Class Represent a Vector"""
 
     def __init__(self, values):
-        print("Constructor type: {}".format(type(values)))
         if (isinstance(values, int)):
             return self.__init_with_size__(size=values)
         if (isinstance(values, tuple)):
@@ -50,19 +49,25 @@ class Vector:
     def __init_with_size__(self, size: int):
         if (size <= 0):
             raise ValueError("Invalid range: Range values out of range. Must be 1 or 2 values")
-        self.values = [[float(i)] for i in range(size - 1)]
+        self.values = [[float(i)] for i in range(size)]
         self.shape = (len(self.values), 1)
 
     def __init_with_range__(self, _range: range):
         if (len(_range) == 0 or len(_range) > 3):
-            raise ValueError("Invalid range: Range values out of range. Must be 1 or 2 values")
-        if (len(_range) >= 2 and _range[0] > _range[1]):
+            raise ValueError("Invalid range: Range values out of range.")
+        if (len(_range) >= 2 and (_range[0] >= _range[1] and len(_range) == 2)):
             raise ValueError("Invalid range: start must be less than end")
         if (len(_range) == 1):
             self.values = [[float(i)] for i in range(_range[0])]
         elif (len(_range) == 2):
             self.values = [[float(i)] for i in range(_range[0], _range[1])]
         elif (len(_range) == 3):
+            if (_range[2] == 0):
+                raise ValueError("Invalid range: step must be non-zero and smaller than the start and end values")
+            if (_range[2] > 0 and _range[0] >= _range[1]):
+                raise ValueError("Invalid range: start must be less than end when step is positive")
+            if (_range[2] < 0 and _range[0] <= _range[1]):
+                raise ValueError("Invalid range: start must be greater than end when step is negative")
             self.values = [[float(i)] for i in range(_range[0], _range[1], _range[2])]
         self.shape = (len(self.values), 1)
 
@@ -165,25 +170,25 @@ class Vector:
         """ Transpose a vector """
         (rows, cols) = self.shape
         new_vector = list()
-        for row in range (rows):
-            new_row = list()
+        for row in range(rows):
             for col in range(cols):
-                new_row.append(self.values[row][col])
-            new_vector.append(new_row)
-
-        return Vector(new_vector)
+                if (rows == 1):
+                    new_vector.append([self.values[row][col]])
+                else:
+                    new_vector.append(self.values[row][col])
+        return Vector(new_vector if rows == 1 else [new_vector])
+                    
 
     def __str__(self):
-        (rows, cols) = self.shape
-        return "Vector({values}) <r={rows}|c={cols}>".format(
+        (cols, rows) = self.shape
+        return "Vector({values}) <c={cols}|r={rows}>".format(
             values=self.values,
             rows=rows,
             cols=cols
         )
 
 
-v1 = Vector([[1., 2., 3.]])
-print("Traspose: {}".format(str(v1.T())))
+
 
 ######################################################################
 ##
@@ -209,16 +214,23 @@ print("Traspose: {}".format(str(v1.T())))
 ##        print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
 ##        print("{} X {} = {}".format(str(v1), str(v1), str(v1.dot(v1))))
 ##        print("ABS(Module): {}".format(v1.abs()))
-##        ##        
+##        
 ##        v1 = Vector([[1.], [3.],[3.]])
 ##        print("Vector([[1.], [2.],[3.]])", str(v1))
-##        ##        
+##        
 ##        print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
 ##        print("{} * {} = {}".format(n, str(v1), str(n * v1)))
 ##        print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
 ##        print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
 ##        print("{} X {} = {}".format(str(v1), str(v1), str(v1.dot(v1))))
 ##        print("ABS(Module): {}".format(v1.abs()))
+##        v1 = Vector([[1., 2., 3.]])
+##        print("TO TRASPOSE:\n\t{}".format(str(v1)))
+##        print("Traspose: {}".format(str(v1.T())))
+##        
+##        v1 = Vector([[1.], [2.], [3.]])
+##        print("TO TRASPOSE:\n\t{}".format(str(v1)))
+##        print("Traspose: {}".format(str(v1.T())))
 ##        
 ##
 ##########################################################################
