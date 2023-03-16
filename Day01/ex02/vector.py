@@ -6,7 +6,7 @@
 #    By: javier <javier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 13:38:34 by javier            #+#    #+#              #
-#    Updated: 2023/03/15 20:23:29 by javier           ###   ########.fr        #
+#    Updated: 2023/03/16 01:18:00 by javier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ from utils import colors
 
 # COLUMNA: ([[1., 2., 3.]])
 # FILA: ([[1.], [2.], [3.]])
+
+# [[0.]*sample[0]] for i in range(sample[1])
 
 class Vector:
     """This Class Represent a Vector"""
@@ -32,30 +34,31 @@ class Vector:
             if (len(values) != cols):
                 raise ValueError("Invalid vector: not all rows have the same size")
             self.values.append(values[col])
-    
-    def map(self, func):
+
+    def iter(self, func):
+        """
+            func: lambda row, col: value
+            Applies a function to all elements of the vector and returns a new vector containing the results
+        """
         (cols, rows) = self.shape
         new_vector = list()
         if (cols == 1):
             for col in range(cols):
                 new_row = list()
                 for row in range(rows):
-                    new_col = func(self.values[col][row])
+                    new_col = func(row, col)
                     new_row.append(new_col)
                 new_vector.append(new_row)
         else:
             for col in range(cols):
                 for row in range(rows):
                     new_col = list()
-                    new_col.append(func(self.values[col][row]))
+                    new_col.append(func(row, col))
                 new_vector.append(new_col)
         return Vector(new_vector)
-    
-    def __add__(self, n:float):
-        sum = lambda a: n + a
-        return self.map(sum)
 
     def sum(self):
+        
         (cols, rows) = self.shape
         sum = 0.
         if (cols == 1):
@@ -68,32 +71,47 @@ class Vector:
                     sum+= self.values[col][row]
         return sum
 
-    #def __sub__(self, p2):
-    #    pass
+    def __add__(self, v2):
+        """ Performs an addition of a vector by a vector n in all elements of the vector """
+        v2 = v2 if isinstance(v2, Vector) and v2.shape == self.shape else None
+    
+    def __add__(self, n:float):
+        """ Performs an addition of a vector by a number n in all elements of the vector """
+        sum = lambda row,col: n + self.values[col][row]
+        return self.iter(sum)
+    
+    def __radd__(self, n:float):
+        """ Performs an addition of a vector by a number n in all elements of the vector for the right """
+        return self.__add__(n)
+
+    def __sub__(self, n: float):
+        """ Performs a substraction of a vector by a number n in all elements of the vector """
+        return self.__add__(-n)
 
     def __mul__(self, n: float):
-        """"Performs a scalar multiplication of a vector by a number n"""
-        mul = lambda a: n * a 
-        return self.map(mul)
+        """" Performs a multiplication of a vector by a number n in all elements of the vector"""
+        mul = lambda row, col: n * self.values[col][row]
+        return self.iter(mul)
+        
 
     def __rmul__(self, n: float):
+        """" Performs a multiplication of a vector by a number n in all elements of the vector for the right """
         return self.__mul__(n)
 
     def abs(self) -> float:
+        """" Returns a module for a vector """
         def squares(a):
             return (a ** 2)
-        sq = self.map(lambda a: squares(a))
-        print(str(sq))
-        return sq.sum()
-        return self.sum()
+        sq = self.iter(lambda row, col: squares(self.values[col][row]))
+        return sq.sum() ** 0.5
 
 
     def __truediv__(self, n: float):
+        """" Performs a multiplication of a vector by a number n in all elements of the vector"""
         try:
             if (n == 0):
                 raise ValueError("ZeroDivisionError: division by zero.")
-            div = lambda a: a * n
-            return self.map(div)
+            return self.iter(lambda row, col: self.values[col][row] / n)
         except Exception as error:
             self.__error__(error=error)
 
@@ -105,13 +123,18 @@ class Vector:
         ))
 
     def __rtruediv__(self, n: float):
+        """" Performs a multiplication of a vector by a number n in all elements of the vector"""
         try:
             raise Exception("NotImplementedError: Division of a scalar by a Vector is not defined here.")
         except Exception as error:
             self.__error__(error=error)
-            
     
+    def dot(self, v2):
+        v2 = v2 if isinstance(v2, Vector) and v2.shape == self.shape else None
+        prod_esc = lambda row, col: float(self.values[col][row]) * float(v2.values[col][row])
+        return self.iter(prod_esc).sum()
     
+
     def __str__(self):
         return "Vector({values}) <r={rows}|c={cols}>".format(
             values=self.values,
@@ -119,20 +142,34 @@ class Vector:
             cols=self.shape[1]
         )
 
-## v1 = Vector([[1., 2., 3.]])
-## print("Vector([[1., 2., 3.]])", str(v1))
-## n = 2
-## print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
-## print("{} * {} = {}".format(n, str(v1), str(n * v1)))
-## print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
-## print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
-## print(v1.abs())
-## 
-## v1 = Vector([[1.], [2.],[3.]])
-## print("Vector([[1.], [2.],[3.]])", str(v1))
-## 
-## print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
-## print("{} * {} = {}".format(n, str(v1), str(n * v1)))
-## print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
-## print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
-## print(v1.abs())
+
+######################################################################
+##
+## 🆘 DEBUG AREA
+##
+######################################################################
+##
+##
+##        v1 = Vector([[1., 3., 3.]])
+##        print("Vector([[1., 2., 3.]])", str(v1))
+##        n = 2
+##        print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+##        print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+##        print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+##        print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+##        print("{} X {} = {}".format(str(v1), str(v1), str(v1.dot(v1))))
+##        print("ABS(Module): {}".format(v1.abs()))
+##        
+##        v1 = Vector([[1.], [3.],[3.]])
+##        print("Vector([[1.], [2.],[3.]])", str(v1))
+##        
+##        print("{} * {} = {}".format(str(v1), n, str(v1 * n)))
+##        print("{} * {} = {}".format(n, str(v1), str(n * v1)))
+##        print("{} / {} = {}".format(str(v1), n, str(v1 / n)))
+##        print("{} / {} = {}".format(str(v1), 0, str(v1 / 0)))
+##        print("{} X {} = {}".format(str(v1), str(v1), str(v1.dot(v1))))
+##        print("ABS(Module): {}".format(v1.abs()))
+##
+##
+##########################################################################
+
